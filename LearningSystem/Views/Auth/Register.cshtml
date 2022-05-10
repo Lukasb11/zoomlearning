@@ -1,0 +1,40 @@
+﻿@model LearningSystem.ViewModel.Register
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+
+<div>
+    @using (Html.BeginForm("SaveRegisterDetails", "Auth"))
+    {
+        <div style="color:red;">@Html.ValidationSummary()</div>
+        <div class="row">
+            <!--Show details are saved successfully message-->
+            <div class="col-lg-12">@ViewBag.Message</div>
+        </div><br />
+        <div class="row">
+            <div class="col-lg-2">@Html.LabelFor(a => a.first_name)</div>
+            <div class="col-lg-10">@Html.TextBoxFor(a => a.first_name, new { @class = "form-control" })</div>
+        </div><br />
+        <div class="row">
+            <div class="col-lg-2">@Html.LabelFor(a => a.last_name)</div>
+            <div class="col-lg-10">@Html.TextBoxFor(a => a.last_name, new { @class = "form-control" })</div>
+        </div><br />
+        <div class="row">
+            <div class="col-lg-2">@Html.LabelFor(a => a.email)</div>
+            <div class="col-lg-10">@Html.TextBoxFor(a => a.email, new { @class = "form-control" })</div>
+        </div><br />
+        <div class="row">
+            <div class="col-lg-2">@Html.LabelFor(a => a.password)</div>
+            <div class="col-lg-10">@Html.TextBoxFor(a => a.password, new { @class = "form-control", type = "Password" })</div>
+        </div><br />
+        <div class="row">
+            <div class="col-lg-2">@Html.LabelFor(a => a.lecturer)</div>
+            <div class="col-lg-10">@Html.CheckBoxFor(a => a.lecturer, new { @class = "form-control" })</div>
+        </div><br />
+        <input type="submit" value="Register" class="btn btn-primary" />
+    }
+
+</div>

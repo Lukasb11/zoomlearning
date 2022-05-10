@@ -1,0 +1,18 @@
+﻿@model LearningSystem.Models.zoom
+@{
+    ViewBag.Title = "User Details";
+}
+
+<h2>User details</h2>
+
+Connect to zoom:
+@if (Model == null)
+{
+    <input type="button" value="Link your zoom account" onclick="@("window.location.href='" + @Url.Action("authZoom", "User") + "'");" />
+
+}
+else
+{
+    <td>Zoom is already authenticated! </td>
+    <input type="button" value="Unlink your zoom account" onclick="@("window.location.href='" + @Url.Action("unauthZoom", "User") + "'");" />
+}

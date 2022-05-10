@@ -1,0 +1,72 @@
+﻿@model LearningSystem.Models.course
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>Course details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Course name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.course_name)
+        </dd>
+
+        <dt>
+            Course description
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.course_desc)
+        </dd>
+
+        <dt>
+            Long course description
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.course_desc_long)
+        </dd>
+
+        <dt>
+            Course length
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.course_length) minutes
+        </dd>
+
+        <dt>
+            Zoom link:
+        </dt>
+
+        <dd>
+            @ViewBag.ZoomLink
+        </dd>
+
+        <dt>
+            Recording link:
+        </dt>
+
+        <dd>
+            @ViewBag.RecordingLink
+        </dd>
+
+        <dt>
+            Amount subscribed:
+        </dt>
+
+        <dd>
+            @ViewBag.SubAmount |    @Html.ActionLink("List of subscribers", "SubscribersList", new { id = @ViewBag.CourseID })
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

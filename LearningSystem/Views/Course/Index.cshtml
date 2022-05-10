@@ -1,0 +1,62 @@
+﻿@model IEnumerable<LearningSystem.Models.course>
+
+@{
+    ViewBag.Title = "List of courses";
+}
+
+<h2>List of courses</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Course Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Course Description", "Index", new { sortOrder = ViewBag.DescSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Course Length", "Index", new { sortOrder = ViewBag.LengthSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Start Time", "Index", new { sortOrder = ViewBag.TimeSortParm })
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.course_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.course_desc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.course_length) minutes
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.start_time)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.course_id })
+        </td>
+        <td>
+            @Html.ActionLink("Subscribe", "Subscribe", new { id = item.course_id })
+        </td>
+    </tr>
+    }
+</table>
+@if (Model.Count() == 0)
+{
+    <H2>
+        No courses found!
+    </H2>
+}

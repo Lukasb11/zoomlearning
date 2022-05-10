@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbModelStoreContainer" CdmEntityContainer="dbEntities">
+    <EntitySetMapping Name="courses">
+      <EntityTypeMapping TypeName="dbModel.course">
+        <MappingFragment StoreEntitySet="course">
+          <ScalarProperty Name="start_time" ColumnName="start_time" />
+          <ScalarProperty Name="course_id" ColumnName="course_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="course_name" ColumnName="course_name" />
+          <ScalarProperty Name="course_desc" ColumnName="course_desc" />
+          <ScalarProperty Name="course_desc_long" ColumnName="course_desc_long" />
+          <ScalarProperty Name="course_length" ColumnName="course_length" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="dbModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="zoom_dev">
+      <EntityTypeMapping TypeName="dbModel.zoom_dev">
+        <MappingFragment StoreEntitySet="zoom_dev">
+          <ScalarProperty Name="client_secret" ColumnName="client_secret" />
+          <ScalarProperty Name="client_id" ColumnName="client_id" />
+          <ScalarProperty Name="zoom_dev_id" ColumnName="zoom_dev_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="zooms">
+      <EntityTypeMapping TypeName="dbModel.zoom">
+        <MappingFragment StoreEntitySet="zoom">
+          <ScalarProperty Name="is_active" ColumnName="is_active" />
+          <ScalarProperty Name="refresh_token" ColumnName="refresh_token" />
+          <ScalarProperty Name="access_token" ColumnName="access_token" />
+          <ScalarProperty Name="auth_token" ColumnName="auth_token" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="zoom_id" ColumnName="zoom_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="zoom_meeting">
+      <EntityTypeMapping TypeName="dbModel.zoom_meeting">
+        <MappingFragment StoreEntitySet="zoom_meeting">
+          <ScalarProperty Name="auto_recording" ColumnName="auto_recording" />
+          <ScalarProperty Name="start_time" ColumnName="start_time" />
+          <ScalarProperty Name="meeting_link" ColumnName="meeting_link" />
+          <ScalarProperty Name="zoom_meet_id" ColumnName="zoom_meet_id" />
+          <ScalarProperty Name="zoom_id" ColumnName="zoom_id" />
+          <ScalarProperty Name="course_id" ColumnName="course_id" />
+          <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="zoom_rec">
+      <EntityTypeMapping TypeName="dbModel.zoom_rec">
+        <MappingFragment StoreEntitySet="zoom_rec">
+          <ScalarProperty Name="rec_link" ColumnName="rec_link" />
+          <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
+          <ScalarProperty Name="rec_id" ColumnName="rec_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="course_subscribe">
+      <EntityTypeMapping TypeName="dbModel.course_subscribe">
+        <MappingFragment StoreEntitySet="course_subscribe">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="course_id" ColumnName="course_id" />
+          <ScalarProperty Name="subscribe_id" ColumnName="subscribe_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

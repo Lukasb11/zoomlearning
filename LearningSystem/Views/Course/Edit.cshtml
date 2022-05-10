@@ -1,0 +1,36 @@
+﻿@model LearningSystem.Models.course
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<div>
+    @using (Html.BeginForm("Edit", "Course"))
+    {
+        <div style="color:red;">@Html.ValidationSummary()</div>
+        <div class="row">
+            <!--Show details are saved successfully message-->
+            <div class="col-lg-12">@ViewBag.Message</div>
+        </div><br />
+        <div class="row">
+            <div class="col-lg-2">@Html.LabelFor(a => a.course_name)</div>
+            <div class="col-lg-10">@Html.TextBoxFor(a => a.course_name, new { @class = "form-control" })</div>
+        </div><br />
+        <div class="row">
+            <div class="col-lg-2">@Html.LabelFor(a => a.course_desc)</div>
+            <div class="col-lg-10">@Html.TextBoxFor(a => a.course_desc, new { @class = "form-control" })</div>
+        </div><br />
+        <div class="row">
+            <div class="col-lg-2">@Html.LabelFor(a => a.course_desc_long)</div>
+            <div class="col-lg-10">@Html.TextBoxFor(a => a.course_desc_long, new { @class = "form-control" })</div>
+        </div><br />
+        <div class="row">
+            <div class="col-lg-2">@Html.LabelFor(a => a.course_length)</div>
+            <div class="col-lg-10">@Html.TextBoxFor(a => a.course_length, new { @class = "form-control" })</div>
+        </div><br />
+        <input type="submit" value="Save" class="btn btn-primary" />
+    }
+
+</div>
+

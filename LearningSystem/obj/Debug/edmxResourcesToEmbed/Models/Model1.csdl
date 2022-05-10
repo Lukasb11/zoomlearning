@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="course">
+    <Key>
+      <PropertyRef Name="course_id" />
+    </Key>
+    <Property Name="course_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="course_name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="course_desc" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="course_desc_long" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="course_length" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="user" Relationship="Self.FK_USER_COURSE" FromRole="course" ToRole="user" />
+    <NavigationProperty Name="zoom_meeting" Relationship="dbModel.FK_COURSE_MEETING" FromRole="course" ToRole="zoom_meeting" />
+    <NavigationProperty Name="course_subscribe" Relationship="dbModel.FK_COURSE_SUBSCRIBE" FromRole="course" ToRole="course_subscribe" />
+    <Property Name="start_time" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="first_name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="last_name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="courses" Relationship="Self.FK_USER_COURSE" FromRole="user" ToRole="course" />
+    <NavigationProperty Name="zooms" Relationship="dbModel.FK_USER_ZOOM" FromRole="user" ToRole="zoom" />
+    <NavigationProperty Name="course_subscribe" Relationship="dbModel.FK_USER_SUBSCRIBE" FromRole="user" ToRole="course_subscribe" />
+    <Property Name="type" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_USER_COURSE">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="course" Type="Self.course" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="course">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="courses" EntityType="Self.course" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <AssociationSet Name="FK_USER_COURSE" Association="Self.FK_USER_COURSE">
+      <End Role="user" EntitySet="users" />
+      <End Role="course" EntitySet="courses" />
+    </AssociationSet>
+    <EntitySet Name="zoom_dev" EntityType="dbModel.zoom_dev" />
+    <EntitySet Name="zooms" EntityType="dbModel.zoom" />
+    <AssociationSet Name="FK_USER_ZOOM" Association="dbModel.FK_USER_ZOOM">
+      <End Role="user" EntitySet="users" />
+      <End Role="zoom" EntitySet="zooms" />
+    </AssociationSet>
+    <EntitySet Name="zoom_meeting" EntityType="dbModel.zoom_meeting" />
+    <EntitySet Name="zoom_rec" EntityType="dbModel.zoom_rec" />
+    <AssociationSet Name="FK_COURSE_MEETING" Association="dbModel.FK_COURSE_MEETING">
+      <End Role="course" EntitySet="courses" />
+      <End Role="zoom_meeting" EntitySet="zoom_meeting" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ZOOM_MEETING" Association="dbModel.FK_ZOOM_MEETING">
+      <End Role="zoom" EntitySet="zooms" />
+      <End Role="zoom_meeting" EntitySet="zoom_meeting" />
+    </AssociationSet>
+    <AssociationSet Name="PK_MEETING_REC" Association="dbModel.PK_MEETING_REC">
+      <End Role="zoom_meeting" EntitySet="zoom_meeting" />
+      <End Role="zoom_rec" EntitySet="zoom_rec" />
+    </AssociationSet>
+    <EntitySet Name="course_subscribe" EntityType="dbModel.course_subscribe" />
+    <AssociationSet Name="FK_COURSE_SUBSCRIBE" Association="dbModel.FK_COURSE_SUBSCRIBE">
+      <End Role="course" EntitySet="courses" />
+      <End Role="course_subscribe" EntitySet="course_subscribe" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USER_SUBSCRIBE" Association="dbModel.FK_USER_SUBSCRIBE">
+      <End Role="user" EntitySet="users" />
+      <End Role="course_subscribe" EntitySet="course_subscribe" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="zoom_dev">
+    <Key>
+      <PropertyRef Name="zoom_dev_id" />
+    </Key>
+    <Property Name="zoom_dev_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="client_id" Type="String" Nullable="false" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="client_secret" Type="String" Nullable="false" MaxLength="3000" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="zoom">
+    <Key>
+      <PropertyRef Name="zoom_id" />
+    </Key>
+    <Property Name="zoom_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="auth_token" Type="String" Nullable="false" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="access_token" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="refresh_token" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="is_active" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="user" Relationship="dbModel.FK_USER_ZOOM" FromRole="zoom" ToRole="user" />
+    <NavigationProperty Name="zoom_meeting" Relationship="dbModel.FK_ZOOM_MEETING" FromRole="zoom" ToRole="zoom_meeting" />
+  </EntityType>
+  <Association Name="FK_USER_ZOOM">
+    <End Type="dbModel.user" Role="user" Multiplicity="1" />
+    <End Type="dbModel.zoom" Role="zoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="zoom">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="zoom_meeting">
+    <Key>
+      <PropertyRef Name="meeting_id" />
+    </Key>
+    <Property Name="meeting_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="course_id" Type="Int32" Nullable="false" />
+    <Property Name="zoom_id" Type="Int32" Nullable="false" />
+    <Property Name="zoom_meet_id" Type="String" Nullable="false" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="meeting_link" Type="String" Nullable="false" MaxLength="254" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="course" Relationship="dbModel.FK_COURSE_MEETING" FromRole="zoom_meeting" ToRole="course" />
+    <NavigationProperty Name="zoom" Relationship="dbModel.FK_ZOOM_MEETING" FromRole="zoom_meeting" ToRole="zoom" />
+    <NavigationProperty Name="zoom_rec" Relationship="dbModel.PK_MEETING_REC" FromRole="zoom_meeting" ToRole="zoom_rec" />
+    <Property Name="start_time" Type="String" Nullable="false" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="auto_recording" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="zoom_rec">
+    <Key>
+      <PropertyRef Name="rec_id" />
+    </Key>
+    <Property Name="rec_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="meeting_id" Type="Int32" Nullable="false" />
+    <Property Name="rec_link" Type="String" Nullable="false" MaxLength="254" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="zoom_meeting" Relationship="dbModel.PK_MEETING_REC" FromRole="zoom_rec" ToRole="zoom_meeting" />
+  </EntityType>
+  <Association Name="FK_COURSE_MEETING">
+    <End Type="dbModel.course" Role="course" Multiplicity="1" />
+    <End Type="dbModel.zoom_meeting" Role="zoom_meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="course">
+        <PropertyRef Name="course_id" />
+      </Principal>
+      <Dependent Role="zoom_meeting">
+        <PropertyRef Name="course_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ZOOM_MEETING">
+    <End Type="dbModel.zoom" Role="zoom" Multiplicity="1" />
+    <End Type="dbModel.zoom_meeting" Role="zoom_meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="zoom">
+        <PropertyRef Name="zoom_id" />
+      </Principal>
+      <Dependent Role="zoom_meeting">
+        <PropertyRef Name="zoom_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_MEETING_REC">
+    <End Type="dbModel.zoom_meeting" Role="zoom_meeting" Multiplicity="1" />
+    <End Type="dbModel.zoom_rec" Role="zoom_rec" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="zoom_meeting">
+        <PropertyRef Name="meeting_id" />
+      </Principal>
+      <Dependent Role="zoom_rec">
+        <PropertyRef Name="meeting_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="course_subscribe">
+    <Key>
+      <PropertyRef Name="subscribe_id" />
+    </Key>
+    <Property Name="subscribe_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="course_id" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="course" Relationship="dbModel.FK_COURSE_SUBSCRIBE" FromRole="course_subscribe" ToRole="course" />
+    <NavigationProperty Name="user" Relationship="dbModel.FK_USER_SUBSCRIBE" FromRole="course_subscribe" ToRole="user" />
+  </EntityType>
+  <Association Name="FK_COURSE_SUBSCRIBE">
+    <End Type="dbModel.course" Role="course" Multiplicity="1" />
+    <End Type="dbModel.course_subscribe" Role="course_subscribe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="course">
+        <PropertyRef Name="course_id" />
+      </Principal>
+      <Dependent Role="course_subscribe">
+        <PropertyRef Name="course_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USER_SUBSCRIBE">
+    <End Type="dbModel.user" Role="user" Multiplicity="1" />
+    <End Type="dbModel.course_subscribe" Role="course_subscribe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="course_subscribe">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
